@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker - Vantagens da Conteinerização</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2496ed 0%, #1c7ed6 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: #ffd43b;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        nav ul li a.active {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            margin-bottom: 50px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .content-section h2 {
+            color: #1c7ed6;
+            margin-bottom: 20px;
+            font-size: 32px;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+        
+        .content-section h3 {
+            color: #495057;
+            margin: 25px 0 15px;
+            font-size: 24px;
+        }
+        
+        .content-section p {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .comparison-table th {
+            background-color: #f1f3f5;
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .advantage {
+            color: #2b8a3e;
+            font-weight: bold;
+        }
+        
+        .disadvantage {
+            color: #c92a2a;
+            font-weight: bold;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .benefit-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            border-top: 4px solid #1c7ed6;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .benefit-card h3 {
+            color: #1c7ed6;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .benefit-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: #ffd43b;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #adb5bd;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #495057;
+            color: #adb5bd;
+            font-size: 14px;
+        }
+        
+        .page-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .nav-button {
+            background-color: #1c7ed6;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            background-color: #1971c2;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .content-section {
+                padding: 25px;
+            }
+            
+            .comparison-table {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Docker<span>Explained</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">O que é Docker?</a></li>
+                        <li><a href="empresas.html">Por que empresas utilizam?</a></li>
+                        <li><a href="vantagens.html" class="active">Vantagens da Conteinerização</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Vantagens da Conteinerização</h1>
+        <p>Explore os benefícios que a tecnologia de containers oferece para o desenvolvimento moderno de software</p>
+    </section>
+
+    <div class="container">
+        <section class="content-section">
+            <h2>Principais Vantagens da Conteinerização</h2>
+            <p>A conteinerização com Docker oferece uma série de vantagens significativas em comparação com métodos tradicionais de desenvolvimento e implantação de software.</p>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <h3><span class="benefit-icon">🚀</span> Portabilidade</h3>
+                    <p>Containers podem ser executados em qualquer sistema que suporte Docker, garantindo consistência entre ambientes de desenvolvimento, teste e produção.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3><span class="benefit-icon">⚡</span> Eficiência de Recursos</h3>
+                    <p>Containers compartilham o kernel do sistema operacional, consumindo menos recursos que máquinas virtuais e permitindo maior densidade de aplicações.</p>
+                </div>
+                <div class="benefit-card">
+                    <h3><span class="benefit-icon">🔒</span> Isolamento</h3>
+                    <p>Cada container executa em um ambiente isolado, prevenindo conflitos entre aplicações e aumentando a segurança através da separação de processos.</p>
+            </div>
+            <div class="benefit-card">
+                <h3><span class="benefit-icon">🔄</span> Escalabilidade</h3>
+                <p>Containers podem ser facilmente escalados horizontalmente para lidar com aumentos de carga, permitindo orquestração eficiente com ferramentas como Kubernetes.</p>
+            </div>
+            <div class="benefit-card">
+                <h3><span class="benefit-icon">📦</span> Versionamento e Controle</h3>
+                <p>Imagens de containers podem ser versionadas, permitindo rollback fácil para versões anteriores e rastreamento de mudanças na aplicação.</p>
+            </div>
+            <div class="benefit-card">
+                <h3><span class="benefit-icon">⚙️</span> DevOps e CI/CD</h3>
+                <p>Integração perfeita com pipelines de CI/CD, acelerando o processo de desenvolvimento e implantação de software através de automação.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Comparação: Containers vs Máquinas Virtuais</h2>
+        <p>Entenda as diferenças fundamentais entre containers Docker e máquinas virtuais tradicionais:</p>
+        
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Aspecto</th>
+                    <th>Containers Docker</th>
+                    <th>Máquinas Virtuais</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Tamanho</strong></td>
+                    <td class="advantage">MBs (Leves)</td>
+                    <td class="disadvantage">GBs (Pesadas)</td>
+                </tr>
+                <tr>
+                    <td><strong>Performance</strong></td>
+                    <td class="advantage">Quase nativa</td>
+                    <td class="disadvantage">Overhead de hipervisor</td>
+                </tr>
+                <tr>
+                    <td><strong>Inicialização</strong></td>
+                    <td class="advantage">Segundos</td>
+                    <td class="disadvantage">Minutos</td>
+                </tr>
+                <tr>
+                    <td><strong>Isolamento</strong></td>
+                    <td class="advantage">Processo/nível de SO</td>
+                    <td class="advantage">Hardware completo</td>
+                </tr>
+                <tr>
+                    <td><strong>Portabilidade</strong></td>
+                    <td class="advantage">Alta (entre sistemas compatíveis)</td>
+                    <td class="disadvantage">Limitada (depende do hipervisor)</td>
+                </tr>
+                <tr>
+                    <td><strong>Densidade</strong></td>
+                    <td class="advantage">Alta (múltiplos containers por host)</td>
+                    <td class="disadvantage">Baixa (limitada por recursos)</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="content-section">
+        <h2>Casos de Uso Ideais para Containers</h2>
+        
+        <h3>✅ Aplicações Modernas e Microserviços</h3>
+        <p>Containers são perfeitos para arquiteturas de microserviços, onde cada serviço pode ser containerizado e escalado independentemente.</p>
+        
+        <h3>✅ Ambientes de Desenvolvimento</h3>
+        <p>Desenvolvedores podem replicar ambientes de produção localmente, eliminando problemas de "funciona na minha máquina".</p>
+        
+        <h3>✅ CI/CD Pipelines</h3>
+        <p>Integração e entrega contínua se beneficiam da consistência e rapidez que os containers proporcionam.</p>
+        
+        <h3>✅ Aplicações Stateless</h3>
+        <p>Aplicações web, APIs e serviços stateless são candidatos ideais para containerização.</p>
+        
+        <h3>❌ Casos Menos Adequados</h3>
+        <p>Aplicações que requerem kernel personalizado, alto desempenho de GUI ou acesso direto a hardware específico podem não ser ideais para containers.</p>
+    </section>
+
+    <div class="page-navigation">
+        <a href="empresas.html" class="nav-button">← Por que empresas utilizam?</a>
+        <a href="index.html" class="nav-button">O que é Docker? →</a>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Sobre</h3>
+                <p>Atividade prática desenvolvida para criar um site estático em HTML e CSS, configurado em um container Docker e com build automatizado pelo GitHub Actions, aplicando conceitos de conteinerização e integração contínua. </p>
+            </div>
+            <div class="footer-section">
+                <h3>Links Rápidos</h3>
+                <a href="index.html">O que é Docker?</a>
+                <a href="empresas.html">Por que empresas utilizam?</a>
+                <a href="vantagens.html">Vantagens da Conteinerização</a>
+            </div>
+            <div class="footer-section">
+                    <h3>Aluno</h3>
+                    <p>Nikolly Fernanda Trombini Gotardo</p>
+                    <p>2° AMS</p>
+                </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 DockerExplained.</p>
+        </div>
+    </div>
+</footer>
+</body> </html>
